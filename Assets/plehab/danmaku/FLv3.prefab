@@ -197,10 +197,10 @@ MonoBehaviour:
   defeatExplosionPrefab: {fileID: 706394084113154756, guid: c004842f7140f214faae6c6aa616c4da, type: 3}
   defeatEnergyReward: 12
   bulletPrefab: {fileID: 5475868430721051879, guid: 848f620e0de5c6447a366b182abfe5ad, type: 3}
-  baseFireInterval: 0.5
-  intervalReductionPerPower: 0.04
-  minFireInterval: 0.18
-  baseBulletsPerSide: 3
+  baseFireInterval: 0.54
+  intervalReductionPerPower: 0.03
+  minFireInterval: 0.3
+  baseBulletsPerSide: 2
   bulletSpeed: 4
   bulletDamage: 10
   spawnEdgeOffset: 0

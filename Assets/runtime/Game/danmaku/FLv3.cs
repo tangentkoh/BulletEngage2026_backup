@@ -8,25 +8,25 @@ public class FLv3 : EngageBossBase
 
     [Header("連射速度設定 (パワー依存)")]
     [Tooltip("Power 1.0 時の発射間隔 (秒)")]
-    [SerializeField] private float baseFireInterval = 0.5f;
+    [SerializeField] private float baseFireInterval = 0.54f;
     [Tooltip("Power 1.0 上昇ごとの間隔短縮量 (秒)")]
-    [SerializeField] private float intervalReductionPerPower = 0.04f;
+    [SerializeField] private float intervalReductionPerPower = 0.03f;
     [Tooltip("発射間隔の下限安全値 (秒)")]
-    [SerializeField] private float minFireInterval = 0.08f;
+    [SerializeField] private float minFireInterval = 0.3f;
 
     [Header("弾数設定 (パワー依存)")]
     [Tooltip("初期の各辺ごとの同時発射数")]
-    [SerializeField] private int baseBulletsPerSide = 3;
+    [SerializeField] private int baseBulletsPerSide = 2;
 
     [Header("弾スペック (等速直進)")]
-    [SerializeField] private float bulletSpeed = 4.5f;
-    [SerializeField] private float bulletDamage = 20f;
+    [SerializeField] private float bulletSpeed = 4f;
+    [SerializeField] private float bulletDamage = 10f;
 
     [Header("出現位置マージン設定")]
     [Tooltip("画面端からの内側オフセット")]
-    [SerializeField] private float spawnEdgeOffset = 0.1f;
+    [SerializeField] private float spawnEdgeOffset = 0f;
     [Tooltip("角付近のランダム範囲マージン")]
-    [SerializeField] private float cornerMargin = 0.3f;
+    [SerializeField] private float cornerMargin = 0.2f;
 
     private Coroutine attackCoroutine;
 

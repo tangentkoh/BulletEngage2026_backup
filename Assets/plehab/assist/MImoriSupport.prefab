@@ -44,4 +44,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e6d88ac595532644a8bc335a66da32d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MimoriSupport
-  bonusInvincibilityDuration: 0.5
+  bonusInvincibilityDuration: 0.4

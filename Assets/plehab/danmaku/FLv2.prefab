@@ -48,7 +48,7 @@ MonoBehaviour:
   arrowBulletPrefab: {fileID: 5475868430721051879, guid: 5259ebfc5ab75ee4ea61fff6443d4f4a, type: 3}
   baseDuration: 1.8
   durationPerPower: 0.3
-  baseBulletCount: 3
+  baseBulletCount: 2
   bonusBulletCountAtPower5: 2
   spawnInterval: 0.2
   baseBulletSpeed: 4

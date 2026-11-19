@@ -17,10 +17,10 @@ MonoBehaviour:
   cutinPortrait: {fileID: 21300000, guid: bb3c88ec0f94929418de412b2c92e474, type: 3}
   supportSkillName: "\u30AA\u30FC\u30D0\u30FC\u30D5\u30ED\u30FC"
   supportDescription: "\u30B2\u30FC\u30E0\u958B\u59CB\u6642\u306B\u30D1\u30EF\u30FC\u5024\u304C\u4E00\u5B9A\u91CF\u5897\u52A0\u3059\u308B\u3002"
-  supportPrefab: {fileID: 8864458274131745925, guid: 441907812ef91144f8e2b536ab131152, type: 3}
+  supportPrefab: {fileID: 8864458274131745925, guid: 86c8efc1df334a142b1750b8f4a96cef, type: 3}
   jammerSkillName: "\u30AD\u30EA\u30F3\u30B0\u30D6\u30EC\u30A4\u30E0"
   jammerDescription: "\u30D5\u30A3\u30FC\u30EB\u30C9\u4E0A\u90E8\u3067\u3070\u3089\u6492\u304D\u5F3E\u5E55\u3092\u767A\u751F\u3055\u305B\u308B\u3002"
-  jammerPrefab: {fileID: 8864458274131745925, guid: 5f1274325ec684743ab7e97f35ac4468, type: 3}
+  jammerPrefab: {fileID: 8864458274131745925, guid: 413e9c961333c3c43a774e2687b65c1b, type: 3}
   engageSkillName: "\u5F31\u8005\u306E\u7F6A"
-  engageDescription: "\u76F8\u624B\u306E\u30D1\u30EF\u30FC\u5024\u3092\u6E1B\u5C11\u3055\u305B\u308B\u653B\u6483\u3092\u4ED5\u639B\u3051\u308B\u3001\u7269\u91CF\u591A\u3081\u3002"
-  assistBossPrefab: {fileID: 8864458274131745925, guid: 4e1543a295c51d2489757aafcd2a4ff3, type: 3}
+  engageDescription: "\u76F8\u624B\u72D9\u3044\u306E\u92ED\u3044\u653B\u6483\u3002\u4E00\u5B9A\u6642\u9593\u3054\u3068\u306B\u30D1\u30EF\u30FC\u5024\u3092\u524A\u308B\u3002"
+  assistBossPrefab: {fileID: 8864458274131745925, guid: c00b9e9403412984996cb4ac7700e4ff, type: 3}

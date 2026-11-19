@@ -13,6 +13,7 @@ public class ArcadeCharSelectPanel : MonoBehaviour
 
     [Header("パネル & ボタン")]
     [SerializeField] private RectTransform panelRect;
+    [Tooltip("キャラボタンの末尾にランダムボタンを配置してください")]
     [SerializeField] private List<Button> charButtons = new();
     [SerializeField] private int columns = 2;
 
@@ -25,6 +26,8 @@ public class ArcadeCharSelectPanel : MonoBehaviour
     [SerializeField] private Image p1AssistPortrait;
     [SerializeField] private List<Sprite> characterPortraits = new();
     [SerializeField] private Sprite dummyPortraitSprite;
+    [Tooltip("ランダムカーソル選択時の立ち絵 (未設定時はダミー立ち絵を使用)")]
+    [SerializeField] private Sprite randomPortraitSprite;
     [SerializeField] private float slideOffset = 60f;
 
     [Header("詳細ポップアップ UI (Shift / L・R)")]
@@ -62,6 +65,7 @@ public class ArcadeCharSelectPanel : MonoBehaviour
     private const float RepeatInterval = 0.12f;
 
     private Image[] GetPortraits() => new[] { p1MainPortrait, p1AssistPortrait };
+    private bool IsRandomSlot(int idx) => idx >= characterDataList.Count;
 
     private void Awake()
     {
@@ -113,6 +117,7 @@ public class ArcadeCharSelectPanel : MonoBehaviour
     private void CheckDetailToggle()
     {
         if (!IsDetailPressed()) return;
+        if (IsRandomSlot(p1CursorIdx)) return; // ランダム枠では詳細を開かない
 
         p1DetailOpen = !p1DetailOpen;
         p1DetailPanel?.SetActive(p1DetailOpen);
@@ -163,7 +168,14 @@ public class ArcadeCharSelectPanel : MonoBehaviour
         if (img == null) return;
 
         img.gameObject.SetActive(true);
-        if (charIdx >= 0 && charIdx < characterPortraits.Count) img.sprite = characterPortraits[charIdx];
+        if (IsRandomSlot(charIdx))
+        {
+            img.sprite = randomPortraitSprite != null ? randomPortraitSprite : dummyPortraitSprite;
+        }
+        else if (charIdx >= 0 && charIdx < characterPortraits.Count)
+        {
+            img.sprite = characterPortraits[charIdx];
+        }
 
         if (portraitMotions[slot].IsActive()) portraitMotions[slot].Cancel();
 
@@ -216,9 +228,9 @@ public class ArcadeCharSelectPanel : MonoBehaviour
         var bsd = BattleSettingData.Instance;
         if (bsd != null)
         {
-            bsd.ResetArcadeData(); // 一旦クリア
+            bsd.ResetArcadeData();
             bsd.CurrentMatchType = MatchType.HumanVsCPU;
-            bsd.IsArcadeMode = true; // 明示的にアーケードモードフラグON
+            bsd.IsArcadeMode = true;
             bsd.P1Data.isCPU = false;
             bsd.P2Data.isCPU = true;
         }
@@ -285,6 +297,21 @@ public class ArcadeCharSelectPanel : MonoBehaviour
         }
     }
 
+    private int GetRandomCharacterIndex(int excludeIndex = -1)
+    {
+        int count = characterDataList.Count;
+        if (count <= 0) return 0;
+        if (count == 1) return 0;
+
+        int picked;
+        do
+        {
+            picked = UnityEngine.Random.Range(0, count);
+        } while (picked == excludeIndex);
+
+        return picked;
+    }
+
     private void OnP1Submit()
     {
         if (!isOpen) return;
@@ -300,7 +327,6 @@ public class ArcadeCharSelectPanel : MonoBehaviour
             if (bsd != null)
             {
                 bsd.IsConfigured = true;
-                // ★ 1P決定時、事前に3戦分（ステージ1〜3）の敵（主役・助手）を一括確定・保存する
                 bsd.GenerateArcadeOpponents(bsd.P1Data.mainCharIndex, characterDataList.Count);
             }
 
@@ -312,17 +338,29 @@ public class ArcadeCharSelectPanel : MonoBehaviour
         }
 
         var bsdData = BattleSettingData.Instance;
-        if (charButtons.Count == 0) return;
+        if (charButtons.Count == 0 || characterDataList.Count == 0) return;
 
         if (step == Step.P1_Main)
         {
-            if (bsdData != null) bsdData.P1Data.mainCharIndex = p1CursorIdx;
+            int selectedMain = IsRandomSlot(p1CursorIdx) ? GetRandomCharacterIndex() : p1CursorIdx;
+            if (bsdData != null) bsdData.P1Data.mainCharIndex = selectedMain;
+            SlidePortrait(0, selectedMain); // 確定したキャラの立ち絵を表示
+
             step = Step.P1_Assist;
+            p1CursorIdx = selectedMain;
             AdvanceCursor(ref p1CursorIdx, 1);
         }
-        else if (step == Step.P1_Assist && (bsdData == null || p1CursorIdx != bsdData.P1Data.mainCharIndex))
+        else if (step == Step.P1_Assist)
         {
-            if (bsdData != null) bsdData.P1Data.assistCharIndex = p1CursorIdx;
+            int mainIdx = bsdData != null ? bsdData.P1Data.mainCharIndex : -1;
+            int selectedAssist = IsRandomSlot(p1CursorIdx) ? GetRandomCharacterIndex(mainIdx) : p1CursorIdx;
+
+            // 主役と同一キャラは選択不可
+            if (selectedAssist == mainIdx) return;
+
+            if (bsdData != null) bsdData.P1Data.assistCharIndex = selectedAssist;
+            SlidePortrait(1, selectedAssist); // 確定したキャラの立ち絵を表示
+
             step = Step.ReadyToStart;
             ReadyStart();
         }
@@ -401,8 +439,16 @@ public class ArcadeCharSelectPanel : MonoBehaviour
     private void UpdateInfoUI()
     {
         var b = BattleSettingData.Instance;
-        Func<int, string> getName = idx => (idx >= 0 && idx < characterDataList.Count && characterDataList[idx] != null) ? characterDataList[idx].characterName : "???";
-        Func<int, string> getDesc = idx => (idx >= 0 && idx < characterDataList.Count && characterDataList[idx] != null) ? characterDataList[idx].characterDescription : "";
+        Func<int, string> getName = idx =>
+        {
+            if (IsRandomSlot(idx)) return "ランダム";
+            return (idx >= 0 && idx < characterDataList.Count && characterDataList[idx] != null) ? characterDataList[idx].characterName : "???";
+        };
+        Func<int, string> getDesc = idx =>
+        {
+            if (IsRandomSlot(idx)) return "キャラクターをランダムで選出する。運命は誰にも味方しない。";
+            return (idx >= 0 && idx < characterDataList.Count && characterDataList[idx] != null) ? characterDataList[idx].characterDescription : "";
+        };
 
         string p1Main = (step == Step.P1_Main) ? getName(p1CursorIdx) : getName(b.P1Data.mainCharIndex);
         string p1Assist = (step == Step.P1_Main) ? "???" : ((step == Step.P1_Assist) ? getName(p1CursorIdx) : getName(b.P1Data.assistCharIndex));
@@ -414,17 +460,20 @@ public class ArcadeCharSelectPanel : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// 現在ターゲットしている主役キャラのクリアタイムランキング(上位5位)を表示更新
-    /// </summary>
     private void UpdateRankingDisplay()
     {
         var b = BattleSettingData.Instance;
         int targetMainIdx = (step == Step.P1_Main) ? p1CursorIdx : (b != null ? b.P1Data.mainCharIndex : p1CursorIdx);
 
+        if (IsRandomSlot(targetMainIdx))
+        {
+            if (rankingTitleText != null) rankingTitleText.text = "<color=#FFD700>HIGH SCORE</color>";
+            if (rankingContentText != null) rankingContentText.text = "---";
+            return;
+        }
+
         if (targetMainIdx >= 0 && targetMainIdx < characterDataList.Count && characterDataList[targetMainIdx] != null)
         {
-            string charName = characterDataList[targetMainIdx].characterName;
             if (rankingTitleText != null)
             {
                 rankingTitleText.text = $"<color=#FFD700>HIGH SCORE</color>";
@@ -438,15 +487,15 @@ public class ArcadeCharSelectPanel : MonoBehaviour
 
                 string rankColor = rank switch
                 {
-                    1 => "<color=#FFD700>", // 金
-                    2 => "<color=#C0C0C0>", // 銀
-                    3 => "<color=#CD7F32>", // 銅
+                    1 => "<color=#FFD700>",
+                    2 => "<color=#C0C0C0>",
+                    3 => "<color=#CD7F32>",
                     _ => "<color=#FFFFFF>"
                 };
 
-                if(rank == 1)rankingStr += $"{rankColor}{rank}st  {formattedTime}</color>\n";
-                else if(rank == 2)rankingStr += $"{rankColor}{rank}nd  {formattedTime}</color>\n";
-                else if(rank == 3)rankingStr += $"{rankColor}{rank}rd  {formattedTime}</color>\n";
+                if (rank == 1) rankingStr += $"{rankColor}{rank}st  {formattedTime}</color>\n";
+                else if (rank == 2) rankingStr += $"{rankColor}{rank}nd  {formattedTime}</color>\n";
+                else if (rank == 3) rankingStr += $"{rankColor}{rank}rd  {formattedTime}</color>\n";
                 else rankingStr += $"{rankColor}{rank}th  {formattedTime}</color>\n";
             }
 

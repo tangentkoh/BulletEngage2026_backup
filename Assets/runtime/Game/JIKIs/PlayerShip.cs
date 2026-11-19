@@ -432,4 +432,14 @@ public class PlayerShip : MonoBehaviour
     {
         invincibilityDuration += amount;
     }
+
+    public void AddPower(float amount)
+    {
+        currentPower = Mathf.Clamp(currentPower + amount, 1.0f, 9.0f);
+    }
+    
+    public void ReducePower(float amount)
+    {
+        currentPower = Mathf.Max(1.0f, currentPower - amount);
+    }
 }

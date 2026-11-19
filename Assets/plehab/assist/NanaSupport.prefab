@@ -44,4 +44,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9bc50392045658a4d8db843f4c0b550b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NanaSupport
-  optionDamageMultiplier: 1.4
+  optionDamageMultiplier: 1.2

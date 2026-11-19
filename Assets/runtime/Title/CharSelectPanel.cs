@@ -13,6 +13,7 @@ public class CharSelectPanel : MonoBehaviour
 
     [Header("パネル & ボタン")]
     [SerializeField] private RectTransform panelRect;
+    [Tooltip("キャラボタンの末尾にランダムボタンを配置してください")]
     [SerializeField] private List<Button> charButtons = new();
     [SerializeField] private int columns = 2;
 
@@ -27,6 +28,8 @@ public class CharSelectPanel : MonoBehaviour
     [SerializeField] private Image p2AssistPortrait;
     [SerializeField] private List<Sprite> characterPortraits = new();
     [SerializeField] private Sprite dummyPortraitSprite;
+    [Tooltip("ランダムカーソル選択時の立ち絵 (未設定時はダミー立ち絵を使用)")]
+    [SerializeField] private Sprite randomPortraitSprite;
     [SerializeField] private float slideOffset = 60f;
 
     [Header("詳細ポップアップ UI (Shift / L・R)")]
@@ -70,6 +73,7 @@ public class CharSelectPanel : MonoBehaviour
     private const float RepeatInterval = 0.12f;
 
     private Image[] GetPortraits() => new[] { p1MainPortrait, p1AssistPortrait, p2MainPortrait, p2AssistPortrait };
+    private bool IsRandomSlot(int idx) => idx >= characterDataList.Count;
 
     private void Awake()
     {
@@ -126,10 +130,11 @@ public class CharSelectPanel : MonoBehaviour
         }
     }
 
-    // --- 割り当てデバイスごとの正確な詳細切り替え判定 ---
     private void CheckDetailToggle(bool isP1)
     {
         if (!IsDetailPressed(isP1)) return;
+        int idx = isP1 ? p1CursorIdx : p2CursorIdx;
+        if (IsRandomSlot(idx)) return; // ランダム枠では詳細を開かない
 
         if (isP1) { p1DetailOpen = !p1DetailOpen; p1DetailPanel?.SetActive(p1DetailOpen); }
         else { p2DetailOpen = !p2DetailOpen; p2DetailPanel?.SetActive(p2DetailOpen); }
@@ -150,7 +155,6 @@ public class CharSelectPanel : MonoBehaviour
         return false;
     }
 
-    // --- 詳細テキスト作成 (1P:青 / 2P:赤) ---
     private void UpdateDetailText(bool isP1)
     {
         TextMeshProUGUI tmp = isP1 ? p1DetailText : p2DetailText;
@@ -184,7 +188,14 @@ public class CharSelectPanel : MonoBehaviour
         if (img == null) return;
 
         img.gameObject.SetActive(true);
-        if (charIdx >= 0 && charIdx < characterPortraits.Count) img.sprite = characterPortraits[charIdx];
+        if (IsRandomSlot(charIdx))
+        {
+            img.sprite = randomPortraitSprite != null ? randomPortraitSprite : dummyPortraitSprite;
+        }
+        else if (charIdx >= 0 && charIdx < characterPortraits.Count)
+        {
+            img.sprite = characterPortraits[charIdx];
+        }
 
         if (portraitMotions[slot].IsActive()) portraitMotions[slot].Cancel();
 
@@ -240,7 +251,7 @@ public class CharSelectPanel : MonoBehaviour
         var bsd = BattleSettingData.Instance;
         if (bsd != null)
         {
-            bsd.ResetArcadeData(); // ★ 確実にアーケードフラグを解除(false)にする
+            bsd.ResetArcadeData();
             bsd.ResetHandicaps();
             bsd.CurrentMatchType = type;
             bsd.P1Data.isCPU = (type == MatchType.CPUVsCPU);
@@ -316,6 +327,21 @@ public class CharSelectPanel : MonoBehaviour
         }
     }
 
+    private int GetRandomCharacterIndex(int excludeIndex = -1)
+    {
+        int count = characterDataList.Count;
+        if (count <= 0) return 0;
+        if (count == 1) return 0;
+
+        int picked;
+        do
+        {
+            picked = UnityEngine.Random.Range(0, count);
+        } while (picked == excludeIndex);
+
+        return picked;
+    }
+
     private void OnP1Submit()
     {
         if (!isOpen) return;
@@ -347,21 +373,73 @@ public class CharSelectPanel : MonoBehaviour
             return;
         }
 
-        if (charButtons.Count == 0) return;
+        if (charButtons.Count == 0 || characterDataList.Count == 0) return;
 
         if (matchType == MatchType.HumanVsHuman)
         {
-            if (step == Step.P1_Main) { bsd.P1Data.mainCharIndex = p1CursorIdx; step = Step.P1_Assist; AdvanceCursor(ref p1CursorIdx, 1); }
-            else if (step == Step.P1_Assist && p1CursorIdx != bsd.P1Data.mainCharIndex) { bsd.P1Data.assistCharIndex = p1CursorIdx; p1PvPDone = true; CheckBothPvP(); }
+            if (step == Step.P1_Main)
+            {
+                int selectedMain = IsRandomSlot(p1CursorIdx) ? GetRandomCharacterIndex() : p1CursorIdx;
+                bsd.P1Data.mainCharIndex = selectedMain;
+                SlidePortrait(0, selectedMain);
+
+                step = Step.P1_Assist;
+                p1CursorIdx = selectedMain;
+                AdvanceCursor(ref p1CursorIdx, 1);
+            }
+            else if (step == Step.P1_Assist)
+            {
+                int selectedAssist = IsRandomSlot(p1CursorIdx) ? GetRandomCharacterIndex(bsd.P1Data.mainCharIndex) : p1CursorIdx;
+                if (selectedAssist == bsd.P1Data.mainCharIndex) return;
+
+                bsd.P1Data.assistCharIndex = selectedAssist;
+                SlidePortrait(1, selectedAssist);
+                p1PvPDone = true;
+                CheckBothPvP();
+            }
         }
         else
         {
-            if (step == Step.P1_Main) { bsd.P1Data.mainCharIndex = p1CursorIdx; step = Step.P1_Assist; AdvanceCursor(ref p1CursorIdx, 1); }
-            else if (step == Step.P1_Assist && p1CursorIdx != bsd.P1Data.mainCharIndex) { bsd.P1Data.assistCharIndex = p1CursorIdx; step = Step.P2_Main; p1CursorIdx = 0; SlidePortrait(2, 0); }
-            else if (step == Step.P2_Main) { bsd.P2Data.mainCharIndex = p1CursorIdx; step = Step.P2_Assist; AdvanceCursor(ref p1CursorIdx, 3); }
-            else if (step == Step.P2_Assist && p1CursorIdx != bsd.P2Data.mainCharIndex)
+            if (step == Step.P1_Main)
             {
-                bsd.P2Data.assistCharIndex = p1CursorIdx;
+                int selectedMain = IsRandomSlot(p1CursorIdx) ? GetRandomCharacterIndex() : p1CursorIdx;
+                bsd.P1Data.mainCharIndex = selectedMain;
+                SlidePortrait(0, selectedMain);
+
+                step = Step.P1_Assist;
+                p1CursorIdx = selectedMain;
+                AdvanceCursor(ref p1CursorIdx, 1);
+            }
+            else if (step == Step.P1_Assist)
+            {
+                int selectedAssist = IsRandomSlot(p1CursorIdx) ? GetRandomCharacterIndex(bsd.P1Data.mainCharIndex) : p1CursorIdx;
+                if (selectedAssist == bsd.P1Data.mainCharIndex) return;
+
+                bsd.P1Data.assistCharIndex = selectedAssist;
+                SlidePortrait(1, selectedAssist);
+
+                step = Step.P2_Main;
+                p1CursorIdx = 0;
+                SlidePortrait(2, 0);
+            }
+            else if (step == Step.P2_Main)
+            {
+                int selectedMain = IsRandomSlot(p1CursorIdx) ? GetRandomCharacterIndex() : p1CursorIdx;
+                bsd.P2Data.mainCharIndex = selectedMain;
+                SlidePortrait(2, selectedMain);
+
+                step = Step.P2_Assist;
+                p1CursorIdx = selectedMain;
+                AdvanceCursor(ref p1CursorIdx, 3);
+            }
+            else if (step == Step.P2_Assist)
+            {
+                int selectedAssist = IsRandomSlot(p1CursorIdx) ? GetRandomCharacterIndex(bsd.P2Data.mainCharIndex) : p1CursorIdx;
+                if (selectedAssist == bsd.P2Data.mainCharIndex) return;
+
+                bsd.P2Data.assistCharIndex = selectedAssist;
+                SlidePortrait(3, selectedAssist);
+
                 step = Step.CPUDifficulty;
                 cpuDifficultyGroup?.SetActive(true);
                 UpdateDifficultyCursor();
@@ -417,8 +495,26 @@ public class CharSelectPanel : MonoBehaviour
         SoundManager.Instance?.PlayUISelectSE();
 
         var bsd = BattleSettingData.Instance;
-        if (!p2MainDone) { bsd.P2Data.mainCharIndex = p2CursorIdx; p2MainDone = true; AdvanceCursor(ref p2CursorIdx, 3); }
-        else if (!p2PvPDone && p2CursorIdx != bsd.P2Data.mainCharIndex) { bsd.P2Data.assistCharIndex = p2CursorIdx; p2PvPDone = true; CheckBothPvP(); }
+        if (!p2MainDone)
+        {
+            int selectedMain = IsRandomSlot(p2CursorIdx) ? GetRandomCharacterIndex() : p2CursorIdx;
+            bsd.P2Data.mainCharIndex = selectedMain;
+            SlidePortrait(2, selectedMain);
+
+            p2MainDone = true;
+            p2CursorIdx = selectedMain;
+            AdvanceCursor(ref p2CursorIdx, 3);
+        }
+        else if (!p2PvPDone)
+        {
+            int selectedAssist = IsRandomSlot(p2CursorIdx) ? GetRandomCharacterIndex(bsd.P2Data.mainCharIndex) : p2CursorIdx;
+            if (selectedAssist == bsd.P2Data.mainCharIndex) return;
+
+            bsd.P2Data.assistCharIndex = selectedAssist;
+            SlidePortrait(3, selectedAssist);
+            p2PvPDone = true;
+            CheckBothPvP();
+        }
         UpdateCursors();
         UpdateInfoUI();
     }
@@ -491,8 +587,16 @@ public class CharSelectPanel : MonoBehaviour
     private void UpdateInfoUI()
     {
         var b = BattleSettingData.Instance;
-        Func<int, string> getName = idx => (idx >= 0 && idx < characterDataList.Count && characterDataList[idx] != null) ? characterDataList[idx].characterName : "???";
-        Func<int, string> getDesc = idx => (idx >= 0 && idx < characterDataList.Count && characterDataList[idx] != null) ? characterDataList[idx].characterDescription : "";
+        Func<int, string> getName = idx =>
+        {
+            if (IsRandomSlot(idx)) return "ランダム";
+            return (idx >= 0 && idx < characterDataList.Count && characterDataList[idx] != null) ? characterDataList[idx].characterName : "???";
+        };
+        Func<int, string> getDesc = idx =>
+        {
+            if (IsRandomSlot(idx)) return "キャラクターをランダムで選出する。運命は誰にも味方しない。";
+            return (idx >= 0 && idx < characterDataList.Count && characterDataList[idx] != null) ? characterDataList[idx].characterDescription : "";
+        };
 
         string p1Main = (step == Step.P1_Main) ? getName(p1CursorIdx) : getName(b.P1Data.mainCharIndex);
         string p1Assist = (step == Step.P1_Main) ? "???" : ((step == Step.P1_Assist) ? getName(p1CursorIdx) : getName(b.P1Data.assistCharIndex));
@@ -571,7 +675,6 @@ public class CharSelectPanel : MonoBehaviour
 
         bool updated = false;
 
-        // 「1」キー押下で 1P ハンデ切替
         if (Keyboard.current.digit1Key.wasPressedThisFrame || Keyboard.current.numpad1Key.wasPressedThisFrame)
         {
             bsd.P1Handicap = !bsd.P1Handicap;
@@ -579,7 +682,6 @@ public class CharSelectPanel : MonoBehaviour
             SoundManager.Instance?.PlayUIMoveSE();
         }
 
-        // 「2」キー押下で 2P ハンデ切替
         if (Keyboard.current.digit2Key.wasPressedThisFrame || Keyboard.current.numpad2Key.wasPressedThisFrame)
         {
             bsd.P2Handicap = !bsd.P2Handicap;
