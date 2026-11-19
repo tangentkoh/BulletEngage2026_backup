@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 299ff3bb20df8a1499da37ad95997865, type: 3}
+  m_Name: nana
+  m_EditorClassIdentifier: Assembly-CSharp::CharacterDataSO
+  characterId: 3
+  characterName: "\u30CA\u30CA\u30FB\u30CF\u30C1"
+  characterDescription: "2\u4EBA\u30671\u4EBA\u306E\u30D2\u30C8\u3068\u30A4\u30CC\u3002\u8A2D\u7F6E\u578B\u306E\u653B\u6483\u624B\u6BB5\u3092\u591A\u304F\u6301\u3064\u3002"
+  cutinPortraitLv1: {fileID: 21300000, guid: ea348b84d18c5754a8435b9410d50a49, type: 3}
+  cutinPortraitLv2: {fileID: 21300000, guid: 8f63963fe56822349a0ad5bc9ffe64b4, type: 3}
+  cutinPortraitLv3: {fileID: 21300000, guid: f01117f3208191b40b56bcd8cfcd7276, type: 3}
+  optionName: "\u30A8\u30A4\u30C8\u30D1\u30C3\u30C8"
+  optionDescription: "\u5927\u304D\u306A\u5F3E\u3092\u6B63\u9762\u306B\u653E\u3064\u3002\u4F4E\u901F\u79FB\u52D5\u6642\u306F\u305D\u306E\u5834\u306B\u56FA\u5B9A\u3002"
+  optionBulletPrefab: {fileID: 7517514170444201474, guid: ceaf0c35106befa47a5ee2295e005870, type: 3}
+  optionShotInterval: 0.12
+  optionBulletSpeed: 24
+  normalAttackPrefab: {fileID: 4910422045036061052, guid: cc18d4d79d18cd54885abcbff1f92b1e, type: 3}
+  specialAttackName: "\u30BB\u30D6\u30F3\u30B0\u30E9\u30A4\u30C9"
+  specialAttackDescription: "7\u56DE\u9023\u7D9A\u306E\u5186\u5F62\u653B\u6483\u3002\u5F3E\u304C\u3051\u3063\u3053\u3046\u753B\u9762\u5185\u306B\u6B8B\u308B\u3002"
+  specialAttackPrefab: {fileID: 4910422045036061052, guid: 2f2f8db5708787b4e820d073fa922e63, type: 3}
+  engageAttackName: "\u30B9\u30FC\u30D1\u30FC\u30CA\u30A4\u30F3\u30BD\u30D0\u30C3\u30C8"
+  engageAttackDescription: "\u7279\u6B8A\u306A\u5F3E\u3092\u7A81\u6483\u3055\u305B\u308B\u3002\u653B\u6483\u91CF\u306F9\u306B\u4F9D\u5B58\u3002"
+  engageAttackPrefab: {fileID: 6241233004637819291, guid: eff70aff562e9d44ba3e7e1d25f8df74, type: 3}
+  themeBGM: {fileID: 8300000, guid: cf63928909b472d42b2657fe212bb28b, type: 3}

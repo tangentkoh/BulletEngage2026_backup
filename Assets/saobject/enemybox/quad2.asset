@@ -1,0 +1,47 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 85697571bcaacdf46a1e09d1616cb2e6, type: 3}
+  m_Name: quad2
+  m_EditorClassIdentifier: Assembly-CSharp::WaveBlockDataSO
+  blockName: quad2
+  blockDuration: 20
+  spawns:
+  - spawnTime: 0
+    enemyPrefab: {fileID: 6915253027532737790, guid: 13f096bca7c030b4488589ef3b3af4b1, type: 3}
+    normalizedX: 0.05
+  - spawnTime: 2
+    enemyPrefab: {fileID: 6915253027532737790, guid: 13f096bca7c030b4488589ef3b3af4b1, type: 3}
+    normalizedX: 0.15
+  - spawnTime: 4
+    enemyPrefab: {fileID: 6915253027532737790, guid: 13f096bca7c030b4488589ef3b3af4b1, type: 3}
+    normalizedX: 0.05
+  - spawnTime: 6
+    enemyPrefab: {fileID: 6915253027532737790, guid: 13f096bca7c030b4488589ef3b3af4b1, type: 3}
+    normalizedX: 0.15
+  - spawnTime: 8
+    enemyPrefab: {fileID: 6915253027532737790, guid: 13f096bca7c030b4488589ef3b3af4b1, type: 3}
+    normalizedX: 0.05
+  - spawnTime: 10
+    enemyPrefab: {fileID: 6915253027532737790, guid: 13f096bca7c030b4488589ef3b3af4b1, type: 3}
+    normalizedX: 0.75
+  - spawnTime: 12
+    enemyPrefab: {fileID: 6915253027532737790, guid: 13f096bca7c030b4488589ef3b3af4b1, type: 3}
+    normalizedX: 0.65
+  - spawnTime: 14
+    enemyPrefab: {fileID: 6915253027532737790, guid: 13f096bca7c030b4488589ef3b3af4b1, type: 3}
+    normalizedX: 0.75
+  - spawnTime: 16
+    enemyPrefab: {fileID: 6915253027532737790, guid: 13f096bca7c030b4488589ef3b3af4b1, type: 3}
+    normalizedX: 0.65
+  - spawnTime: 18
+    enemyPrefab: {fileID: 6915253027532737790, guid: 13f096bca7c030b4488589ef3b3af4b1, type: 3}
+    normalizedX: 0.75

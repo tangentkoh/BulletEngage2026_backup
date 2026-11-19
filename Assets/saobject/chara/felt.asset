@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 299ff3bb20df8a1499da37ad95997865, type: 3}
+  m_Name: felt
+  m_EditorClassIdentifier: Assembly-CSharp::CharacterDataSO
+  characterId: 0
+  characterName: "\u30D5\u30A7\u30EB\u30C8\u30FB\u30B8\u30A7\u30A4\u30DF\u30FC"
+  characterDescription: "\u81EA\u79F0\u30AF\u30FC\u30EB\u306A\u79C1\u7ACB\u63A2\u5075\u3002\u5730\u5473\u306B\u771F\u9762\u76EE\u306B\u76F8\u624B\u3092\u8FFD\u3044\u8A70\u3081\u308B\u3002"
+  cutinPortraitLv1: {fileID: 21300000, guid: 18d62720101e8b44d8c7099250867734, type: 3}
+  cutinPortraitLv2: {fileID: 21300000, guid: 3d3191e4c53f41341af7645afe7553cf, type: 3}
+  cutinPortraitLv3: {fileID: 21300000, guid: b87076609b468ce40bb67f553bc1737c, type: 3}
+  optionName: "\u30C0\u30D6\u30EB\u30A6\u30A7\u30A4\u30D6"
+  optionDescription: "\u79FB\u52D5\u901F\u5EA6\u306B\u3088\u3063\u3066\u767A\u5C04\u65B9\u5411\u304C\u5909\u5316\u3002\u7D14\u7C8B\u306A\u706B\u529B\u306F\u30C8\u30C3\u30D7\u30AF\u30E9\u30B9\u3002"
+  optionBulletPrefab: {fileID: 7517514170444201474, guid: 6708ade79312bca41b9ccc261e8e5fa0, type: 3}
+  optionShotInterval: 0.1
+  optionBulletSpeed: 19
+  normalAttackPrefab: {fileID: 4910422045036061052, guid: cc18d4d79d18cd54885abcbff1f92b1e, type: 3}
+  specialAttackName: "\u30D1\u30B7\u30E5\u30FC\u30C8\u30A2\u30ED\u30FC"
+  specialAttackDescription: "\u5782\u76F4\u306B\u5F13\u77E2\u3092\u9023\u5C04\u3059\u308B\u5F3E\u5E55\u3002\u5F3E\u901F\u304C\u975E\u5E38\u306B\u65E9\u3044\u3002"
+  specialAttackPrefab: {fileID: 4910422045036061052, guid: 8f2ef9bef92a9b34a95ba7be99d232b3, type: 3}
+  engageAttackName: "\u30AA\u30D6\u30B5\u30FC\u30D0\u30FC\u30EC\u30A4\u30F3"
+  engageAttackDescription: "\u66F2\u304C\u308B\u5F13\u77E2\u3092\u5DE6\u53F3\u304B\u3089\u653E\u3064\u5F3E\u5E55\u3002\u7269\u91CF\u305D\u306E\u3082\u306E\u304C\u304B\u306A\u308A\u591A\u3044\u3002"
+  engageAttackPrefab: {fileID: 6241233004637819291, guid: 34b876067dddb0f49bc3fa7af5f5c369, type: 3}
+  themeBGM: {fileID: 8300000, guid: b7b2e60221b6ae0419ad062d466af55e, type: 3}

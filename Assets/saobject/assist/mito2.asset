@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4cc52e6fa9b95d04dafcf076b2c44f6c, type: 3}
+  m_Name: mito2
+  m_EditorClassIdentifier: Assembly-CSharp::AssistantDataSO
+  assistantId: 7
+  assistantName: "\u7F8E\u90FD"
+  cutinPortrait: {fileID: 21300000, guid: 3f595cc84f219a341bf10459ab1beb54, type: 3}
+  supportSkillName: "\u30EA\u30B8\u30A7\u30CD\u30EC\u30A4\u30C8"
+  supportDescription: "\u98DF\u3044\u3057\u3070\u308A\u72B6\u614B\u3067\u306A\u3044\u6642\u3001HP\u304C\u5C11\u3057\u305A\u3064\u56DE\u5FA9\u3059\u308B\u3002"
+  supportPrefab: {fileID: 8864458274131745925, guid: b7fabae6455e325409ccea7f67ac7899, type: 3}
+  jammerSkillName: "\u30E4\u30C9\u30AF\u30AC\u30A8\u30EB"
+  jammerDescription: "\u6BD2\u5F3E\u3092\u5E7E\u3064\u304B\u843D\u4E0B\u3055\u305B\u308B\u3002\u547D\u4E2D\u3057\u305F\u5834\u5408\u3001\u30A8\u30CD\u30EB\u30AE\u30FC\u304C\u6E1B\u5C11\u3059\u308B\u3002"
+  jammerPrefab: {fileID: 8864458274131745925, guid: b55791743b42607439215c52e44d4a72, type: 3}
+  engageSkillName: "\u8056\u8005\u306E\u87F2\u6BD2"
+  engageDescription: "\u30D1\u30CB\u30C3\u30B7\u30E5\u30A6\u30A7\u30DD\u30F3\u3002\u6BD2\u5F3E\u3092\u672C\u4F53\u5468\u8FBA\u304B\u3089\u5E7E\u3064\u304B\u653E\u3064\u3002"
+  assistBossPrefab: {fileID: 8864458274131745925, guid: 4304dc0b49424f64ea55d8b5d22b7841, type: 3}

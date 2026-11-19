@@ -1,0 +1,59 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 85697571bcaacdf46a1e09d1616cb2e6, type: 3}
+  m_Name: quad3
+  m_EditorClassIdentifier: Assembly-CSharp::WaveBlockDataSO
+  blockName: quad3
+  blockDuration: 20
+  spawns:
+  - spawnTime: 0
+    enemyPrefab: {fileID: 6915253027532737790, guid: a25dba6ae5519db428633b5491aeae71, type: 3}
+    normalizedX: 0.95
+  - spawnTime: 1
+    enemyPrefab: {fileID: 6915253027532737790, guid: a25dba6ae5519db428633b5491aeae71, type: 3}
+    normalizedX: 0.8
+  - spawnTime: 2
+    enemyPrefab: {fileID: 6915253027532737790, guid: a25dba6ae5519db428633b5491aeae71, type: 3}
+    normalizedX: 0.2
+  - spawnTime: 3
+    enemyPrefab: {fileID: 6915253027532737790, guid: a25dba6ae5519db428633b5491aeae71, type: 3}
+    normalizedX: 0.4
+  - spawnTime: 5
+    enemyPrefab: {fileID: 6915253027532737790, guid: a25dba6ae5519db428633b5491aeae71, type: 3}
+    normalizedX: 0.5
+  - spawnTime: 6
+    enemyPrefab: {fileID: 6915253027532737790, guid: a25dba6ae5519db428633b5491aeae71, type: 3}
+    normalizedX: 0.3
+  - spawnTime: 7
+    enemyPrefab: {fileID: 6915253027532737790, guid: a25dba6ae5519db428633b5491aeae71, type: 3}
+    normalizedX: 0.7
+  - spawnTime: 8
+    enemyPrefab: {fileID: 6915253027532737790, guid: a25dba6ae5519db428633b5491aeae71, type: 3}
+    normalizedX: 0.5
+  - spawnTime: 10
+    enemyPrefab: {fileID: 6915253027532737790, guid: a25dba6ae5519db428633b5491aeae71, type: 3}
+    normalizedX: 0.9
+  - spawnTime: 12
+    enemyPrefab: {fileID: 6915253027532737790, guid: a25dba6ae5519db428633b5491aeae71, type: 3}
+    normalizedX: 0.7
+  - spawnTime: 14
+    enemyPrefab: {fileID: 6915253027532737790, guid: a25dba6ae5519db428633b5491aeae71, type: 3}
+    normalizedX: 0.9
+  - spawnTime: 16
+    enemyPrefab: {fileID: 6915253027532737790, guid: a25dba6ae5519db428633b5491aeae71, type: 3}
+    normalizedX: 0.7
+  - spawnTime: 17
+    enemyPrefab: {fileID: 6915253027532737790, guid: a25dba6ae5519db428633b5491aeae71, type: 3}
+    normalizedX: 0.65
+  - spawnTime: 17
+    enemyPrefab: {fileID: 6915253027532737790, guid: a25dba6ae5519db428633b5491aeae71, type: 3}
+    normalizedX: 0.55

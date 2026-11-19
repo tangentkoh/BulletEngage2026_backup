@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4cc52e6fa9b95d04dafcf076b2c44f6c, type: 3}
+  m_Name: Mitsuru2
+  m_EditorClassIdentifier: Assembly-CSharp::AssistantDataSO
+  assistantId: 2
+  assistantName: "\u4F3C\u9CE5\u30DF\u30C4\u30EB"
+  cutinPortrait: {fileID: 21300000, guid: ad3b0043ba3b2d444966b8c26da1d597, type: 3}
+  supportSkillName: "\u6B63\u7FA9\u5148\u5236\u653B\u6483"
+  supportDescription: "\u30B2\u30FC\u30E0\u958B\u59CB\u6642\u306B\u30A8\u30CD\u30EB\u30AE\u30FC\u304C\u4E00\u5B9A\u91CF\u5897\u52A0\u3057\u3001\u30A2\u30BF\u30C3\u30AF\u767A\u52D5\u6642\u306B\u30A8\u30CD\u30EB\u30AE\u30FC\u304C\u5C11\u3057\u9084\u5143\u3055\u308C\u308B\u3002"
+  supportPrefab: {fileID: 8864458274131745925, guid: f833594a46bc6b542ae0e5d44367ad23, type: 3}
+  jammerSkillName: "\u30AE\u30AC\u30C8\u30F3\u30B3\u30A4\u30F3"
+  jammerDescription: "\u5927\u304D\u306A\u30B3\u30A4\u30F3\u3092\u843D\u4E0B\u3055\u305B\u308B\u3002\u3060\u304B\u3089\u3001\u6368\u3066\u3066\u304A\u304F\u5FC5\u8981\u304C\u3042\u3063\u305F\u3093\u3067\u3059\u306D\u3002"
+  jammerPrefab: {fileID: 8864458274131745925, guid: 3656c9c231a01d74cb920e7028c861c0, type: 3}
+  engageSkillName: "\u4E16\u754C\u306E\u6CD5\u5247\u306F\u4E71\u308C\u308B"
+  engageDescription: "\u7D14\u7C8B\u306A\u3070\u3089\u6492\u304D\u653B\u6483\u3092\u4ED5\u639B\u3051\u308B\u3002\u4E3B\u5F79\u306E\u30DC\u30B9\u306EHP\u304C\u5897\u52A0\u3059\u308B\u3002"
+  assistBossPrefab: {fileID: 8864458274131745925, guid: 108a133acd49368478d14048a304a88e, type: 3}
